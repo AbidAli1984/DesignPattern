@@ -19,7 +19,8 @@ public class RestServiceGenerator {
     public static RestTemplate GetInstance()
     {
         // return restTemplate object if initialized already
-
+        if(restTemplate != null)
+            return restTemplate;
 
         // Initialize restTemplate. This is executed only once.
         restTemplate = new RestTemplateBuilder()
@@ -32,5 +33,6 @@ public class RestServiceGenerator {
                 .build();
 
         //return restTemplate object
+        return restTemplate;
     }
 }
