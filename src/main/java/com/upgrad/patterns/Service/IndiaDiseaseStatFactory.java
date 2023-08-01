@@ -21,14 +21,17 @@ public class IndiaDiseaseStatFactory {
 
     
     //create a method named GetInstance with return type as IndianDiseaseStat and parameter of type sourceType
-    	//create a conditional statement
-    	//if the sourceType is JohnHopkins
-    		//return johnHopkinsStrategy
-    	//if the sourceType is DiseaseSh
-    		//return diseaseShStrategy
-    
-    	//create a message for invalid disease strategy/sourceType
-    	//throw the message as an Illegal argument exception
-    
-    
+    public IndianDiseaseStat GetInstance(SourceType sourceType) {
+        //create a conditional statement
+        if(sourceType == SourceType.JohnHopkins) {
+            return johnHopkinsStrategy;
+        }
+        else if(sourceType == SourceType.DiseaseSh){
+            return diseaseShStrategy;
+        }
+        else {
+            throw new IllegalArgumentException("Illegal argument exception");
+        }
+
+    }
 }
