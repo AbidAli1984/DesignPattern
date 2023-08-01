@@ -15,6 +15,7 @@ import org.springframework.web.client.RestTemplate;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Service
@@ -33,20 +34,27 @@ public class JohnHopkinsStrategy implements IndianDiseaseStat {
 
 	@Override
 	public String GetActiveCount() {
-		
-		
-		//try block
+		try {
 			//get response from the getJohnHopkinResponses method
+			JohnHopkinResponse[] johnHopkins = getJohnHopkinResponses();
+
 			//filter the data based such that country equals India (use getCountry() to get the country value)
+			List<JohnHopkinResponse> johnHopkinsIndia = Arrays.stream(johnHopkins)
+					.filter(p -> p.getCountry().equals("India")).collect(Collectors.toList());
+
 			//Map the data to "confirmed" value (use getStats() and getConfirmed() to get stats value and confirmed value)
 			//Reduce the data to get a sum of all the "confirmed" values
+			float confirmedTotal = johnHopkinsIndia
+					.stream()
+					.reduce(0f, (subtotal, element) -> subtotal + element.getStats().getConfirmed(), Float::sum);
+
 			//return the response after rounding it up to 0 decimal places
-		//catch block
-			//log the error
-			//return null
-
-	
-
+			float activeCount = Math.round(confirmedTotal);
+			return String.format("%.0f", activeCount);
+		} catch (Exception ex){
+			logger.error(ex.getMessage());
+			return null;
+		}
 	}
 
 	private JohnHopkinResponse[] getJohnHopkinResponses() {
