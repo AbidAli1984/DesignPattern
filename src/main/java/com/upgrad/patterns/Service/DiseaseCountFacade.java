@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 public class DiseaseCountFacade {
 
    //create a private object indiaDiseaseStat of type IndiaDiseaseStatFactory
-   IndiaDiseaseStatFactory indiaDiseaseStat;
+   private IndiaDiseaseStatFactory indiaDiseaseStat;
 
     @Autowired
     public DiseaseCountFacade(IndiaDiseaseStatFactory indiaDiseaseStat)
